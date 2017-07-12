@@ -22,6 +22,7 @@ int index_thread;
 int main ()
 {
 	socketCreation();
+	while(1);
 }
 
 /*********************Function to create Socket****************/
@@ -31,7 +32,7 @@ int socketCreation ()
 	struct sockaddr_in addr, client_addr;
 	socklen_t addrlen;
 	addr.sin_family = AF_LOCAL;
-	addr.sin_port = htons (4334);
+	addr.sin_port = htons (4336);
 	addr.sin_addr.s_addr = INADDR_LOOPBACK;
 	sockfd = socket (AF_LOCAL, SOCK_STREAM, 0);
 	if (sockfd == -1){
@@ -75,14 +76,15 @@ int funcCreateThread (int fd)
 
 void *threadCommunicate(void *fd)
 {
+	printf("In comm thread\n");
 	char buff[64];
 	int new_fd = *(int *)fd;
 	while(1){
 		memset(buff, '\0', sizeof(buff));
 		read(new_fd, buff, sizeof(buff));
+		printf("message from fd: %d is %s\n", new_fd, buff);
 		if(strncmp(buff, "exit", 4) == 0)
 			break;
-		printf("message from fd: %d is %s\n", new_fd, buff);
 	
 	}
 	close(new_fd);

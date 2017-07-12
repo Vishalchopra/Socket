@@ -22,7 +22,7 @@ int socketCreation()
 	struct sockaddr_in addr, client_addr;
 	socklen_t addrlen;
 	addr.sin_family = AF_LOCAL;
-	addr.sin_port = htons (3333);
+	addr.sin_port = htons (4335);
 	addr.sin_addr.s_addr = INADDR_LOOPBACK;
 	sockfd = socket (AF_LOCAL, SOCK_STREAM, 0);
 	if (sockfd == -1){
